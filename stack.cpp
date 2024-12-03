@@ -18,7 +18,13 @@ public:
 	bool isEmpty();
 	int peek();
 	int pop();
+	int size();
 };
+
+int Stack::size(){
+		int size = top + 1;
+		return size;
+	}
 
 bool Stack::push(int x){
 	a[++top] = x;
@@ -57,13 +63,17 @@ int main(){
 
 	s.push(10);
 	s.push(20);
-	cout << s.peek();
+	s.push(911);
+
+	cout << s.size() << endl;
+
 
 	while(!s.isEmpty()){
 		cout << s.peek() << endl;
 
 		s.pop();
 	}
+
 
 	return 0;
 }
