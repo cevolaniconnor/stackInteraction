@@ -19,6 +19,7 @@ public:
 	int peek();
 	int pop();
 	int size();
+	void reverseStack();
 };
 
 int Stack::size(){
@@ -29,7 +30,7 @@ int Stack::size(){
 bool Stack::push(int x){
 	a[++top] = x;
 
-	cout << x << " was push on the stack" << endl;
+	//cout << x << " was push on the stack" << endl;
 
 	return true;
 }
@@ -47,14 +48,42 @@ int Stack::peek(){
 }
 
 int Stack::pop(){
-	int x = a[top--];
-
-	return x;
-}
+	if (top < 0) {
+        cout << "Stack Underflow" << endl;
+        return 0; 
+    }
+    return a[top--];
+} 
 
 bool Stack::isEmpty(){
 
 	return (top < 0);
+}
+
+void reverseStack(Stack &currentStack){
+
+	Stack tempStack;
+
+	while (!currentStack.isEmpty()) {
+        tempStack.push(currentStack.peek());
+        currentStack.pop();
+    }
+    currentStack = tempStack;
+}
+
+void printStack(Stack &originalStack){
+
+	if (originalStack.isEmpty())
+		return;
+
+	int x = originalStack.peek();
+	originalStack.pop();
+
+	cout << x << ' ' << endl;
+
+	printStack(originalStack);
+
+	originalStack.push(x);
 }
 
 int main(){
@@ -67,13 +96,17 @@ int main(){
 
 	cout << s.size() << endl;
 
+	cout << "Original Stack:" << s.peek() << endl;
 
-	while(!s.isEmpty()){
-		cout << s.peek() << endl;
+	reverseStack(s);
 
-		s.pop();
-	}
+	cout << "Reversed Stack:" << s.peek() << endl;
 
+	printStack(s);
 
 	return 0;
 }
+
+
+
+
